@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
 
-function App() {
+import { Layout } from 'antd'
+
+import { Map } from './components/Map/Map'
+import { CornMenu } from './components/CornMenu/CornMenu'
+import { MapSidebar } from './components/Map/MapSidebar/MapSidebar'
+
+const { Sider, Content } = Layout
+
+const App = () => {
+  const [isMenuCollapsed, setIsMenuCollapsed] = useState(false)
+  const [currentAside, setCurrentAside] = useState('fields')
+
+  const onToggleMenu = () => {
+    setIsMenuCollapsed(!isMenuCollapsed)
+  }
+  const onSelectMenu = (e) => {
+    setCurrentAside(e.key)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Layout style={{ height: '100vh' }}>
+      <Sider trigger={null} collapsible collapsed={isMenuCollapsed}>
+        <CornMenu onSelect={onSelectMenu} />
+      </Sider>
+
+      <Layout className="site-layout">
+        <MapSidebar
+          isMenuCollapsed={isMenuCollapsed}
+          onToggleMenu={onToggleMenu}
+          currentAside={currentAside}
+        />
+        <Content
+          className="site-layout-background"
+          style={{
+            minHeight: 280,
+            background: '#FFF',
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Map />
+        </Content>
+      </Layout>
+    </Layout>
+  )
 }
 
-export default App;
+export default App
