@@ -7,8 +7,8 @@ import { FeatureGroup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import turfArea from '@turf/area'
 
-import { createPopupContent } from '../../../utils/layerPopup'
-import { requestStats } from '../../../api/api'
+import { createPopupContent } from '../../../../utils/layerPopup'
+import { requestStats } from '../../../../api/geo'
 
 const DrawPanel = () => {
   const map = useMap()
