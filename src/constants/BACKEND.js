@@ -1,5 +1,1 @@
-const BACKEND = {
-  SERVER: 'http://localhost:8000',
-}
-
-export { BACKEND }
+export const API_URL = 'http://localhost:8000'

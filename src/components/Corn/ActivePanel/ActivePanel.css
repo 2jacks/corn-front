@@ -1,0 +1,35 @@
+.active-panel {
+    background-color: #fff;
+    height: 100vh;
+    width: 100%;
+    min-width: 300px;
+
+    position: relative;
+}
+
+.active-panel hr {
+    height: 3px;
+    margin: 0 16px;
+
+    background-color: #000;
+    border: none;
+}
+
+.active-panel__header {
+    text-align: center;
+    font-size: 20px;
+    margin: 5px 16px;
+
+    position: relative;
+}
+
+
+.active-panel__collapse-trigger {
+    font-size: 20px;
+    color: #000;
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+}

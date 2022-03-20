@@ -1,0 +1,12 @@
+.user-menu {
+  padding: 10px;
+
+  position: absolute;
+  bottom: 0;
+
+  &__username {
+    color: white;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+}
