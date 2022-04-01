@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import App from './App';
+import {CornMenu} from "./components/Corn/CornMenu/CornMenu";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('render menu', () => {
+   render(<CornMenu/>);
+   const linkElement = screen.getByText('Поля');
+   expect(linkElement).toBeInTheDocument();
 });

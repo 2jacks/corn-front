@@ -1,15 +1,25 @@
 import {API_URL} from '../constants/BACKEND'
 
 class GeoService {
-   static async requestStats(geojson) {
-      return await fetch(API_URL + '/geo/21/researches/3/stats/', {
+   static async createAOI({username, fieldId, researchId, geom, area}) {
+      return await fetch(API_URL + `/geo/${username}/fields/${fieldId}/researches/${researchId}/aoi`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify({
-            geojson,
-         }),
+            username, fieldId, researchId, geom, area
+         })
+      })
+        .then((res) => res.json())
+   }
+
+   static async fetchAOIs({username, fieldId, researchId}) {
+      return await fetch(API_URL + `/geo/${username}/fields/${fieldId}/researches/${researchId}/aoi`, {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json',
+         },
       })
         .then((res) => res.json())
    }

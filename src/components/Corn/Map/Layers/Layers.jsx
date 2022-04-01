@@ -4,9 +4,11 @@ import {ImageOverlay, LayersControl, TileLayer} from 'react-leaflet'
 import {DrawPanel} from '../DrawPanel/DrawPanel'
 import L from 'leaflet'
 
-import {MapData} from "../../Corn";
+import {MapData} from "../../../../contexts/MapData";
 
-const Layers = () => {
+import {API_URL} from "../../../../constants/BACKEND";
+
+const Layers = ({mapCtx}) => {
    const user = JSON.parse(localStorage.getItem('user'))
    const mapData = useContext(MapData)
    useEffect(() => {
@@ -20,6 +22,21 @@ const Layers = () => {
      [54.091709135, 56.230794873],
      [54.072576908, 56.272860853]
    )
+
+   let researchLayers
+   if (mapData && Object.keys(mapData.research).length !== 0) {
+      researchLayers = (
+        <>
+           <LayersControl.Overlay checked={true} name={'Исходник'}>
+              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/src`} bounds={bounds}/>
+           </LayersControl.Overlay>
+           <LayersControl.Overlay checked={true} name={'Индекс'}>
+              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>
+           </LayersControl.Overlay>
+        </>
+      )
+   } else researchLayers = null
+
    return (
      <LayersControl position="bottomright">
         <LayersControl.BaseLayer name={'Open Street Map'}>
@@ -37,16 +54,11 @@ const Layers = () => {
         </LayersControl.BaseLayer>
 
         <LayersControl.Overlay checked={true} name={'Области интереса'}>
-           <DrawPanel/>
+           <DrawPanel mapData={mapCtx}/>
         </LayersControl.Overlay>
 
-        {/*!!!!!!!*/}
-        <LayersControl.Overlay checked={true} name={'Индекс'}>
-           {/*<ImageOverlay url="./src.jpg" bounds={bounds}/>*/}
-           <ImageOverlay url={'https://lapkins.ru/upload/iblock/c3e/c3efe1eeeb89cb82ae4598a6cb71a579.jpeg'} bounds={bounds}/>
-           {/*<ImageOverlay url={`http://localhost:8000/geo/${user.username}/fields/${mapData.field_id}/researches/${mapData.id}/files/index`} bounds={bounds}/>*/}
-        </LayersControl.Overlay>
-        {/*!!!!!!!*/}
+        {researchLayers}
+
      </LayersControl>
    )
 }

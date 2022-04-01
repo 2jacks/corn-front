@@ -11,18 +11,10 @@ import {useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {userFetched} from "../../store/features/user/userSlice";
 import {User} from "./User/User";
+import {MapData} from "../../contexts/MapData";
 
 const {Sider, Content} = Layout
 
-
-const mapData = {
-   srcImg: '',
-   indexImg: '',
-   setImgs: (src, index) => {
-   }
-
-}
-export const MapData = React.createContext(mapData)
 
 const Corn = () => {
    const dispatch = useDispatch()
@@ -64,13 +56,22 @@ const Corn = () => {
 
 
    const _changeResearch = (research) => {
-      setMapData({...mapData, research: research})
+      setMapData((prev) => {
+         return {...prev, research: research}
+      })
+   }
+   const _changeAOIs = (aois) => {
+      setMapData((prev) => {
+         return {...prev, AOIs: aois}
+      })
    }
 
    const [mapData, setMapData] = useState({
       research: {},
       field: {},
-      changeResearch: _changeResearch
+      AOIs: [],
+      changeResearch: _changeResearch,
+      changeAOIs: _changeAOIs
    })
 
    return (

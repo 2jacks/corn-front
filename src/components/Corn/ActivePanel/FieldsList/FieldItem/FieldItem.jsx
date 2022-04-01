@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import './FieldItem.scss'
 
 import {ResearchItem} from "./ResearchItem/ResearchItem";
 
-import {Collapse, List} from "antd";
+import {Collapse, List, message} from "antd";
 
 import {useDispatch, useSelector} from "react-redux";
 import {fetchResearches, selectFieldResearches} from "../../../../../store/features/researches/researchesSlice";
@@ -17,6 +17,7 @@ const FieldItem = ({field}) => {
    const researches = useSelector(state => selectFieldResearches(state, field.id))
    const researchesStatus = useSelector(state => state.researches.status)
 
+
    useEffect(() => {
       console.log('fieldItem init', field.id, researches, researchesStatus)
    }, [researches])
@@ -25,9 +26,11 @@ const FieldItem = ({field}) => {
       if (researchesStatus === 'idle') {
          dispatch(fetchResearches({username: user.username, fieldId: field.id}))
       }
+      if (researchesStatus === 'failed') {
+         message.error('This is an error message')
+      }
 
    }, [])
-
    const header = (
      <div className={'field-item'}>
         <div className={'field-item__icon'}>
@@ -40,11 +43,11 @@ const FieldItem = ({field}) => {
 
    return (
 
-     <Collapse>
-        <Panel key={field.id.toString()} header={header}>
+     <Collapse bordered={false} className={'field-item__collapse'}>
+        <Panel key={field.id.toString()} header={header} className={'field-item__collapse-panel'}>
            <div>
-              <List dataSource={researches} renderItem={(item) =>
-                <List.Item><ResearchItem research={item}/></List.Item>}/>
+              <List dataSource={researches} className={'research-list'} renderItem={(item) =>
+                <ResearchItem research={item}/>}/>
            </div>
         </Panel>
      </Collapse>
