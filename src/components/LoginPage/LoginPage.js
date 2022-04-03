@@ -56,7 +56,7 @@ const LoginPage = () => {
           }}
           initialValues={{
              remember: false,
-             username: 'anton_postman',
+             username: 'anton',
              password: '315220kalter',
           }}
           onFinish={_onFinish}

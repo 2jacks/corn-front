@@ -27,11 +27,17 @@ const Layers = ({mapCtx}) => {
    if (mapData && Object.keys(mapData.research).length !== 0) {
       researchLayers = (
         <>
+           {/*<LayersControl.Overlay checked={true} name={'Исходник'}>*/}
+           {/*   <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/src`} bounds={bounds}/>*/}
+           {/*</LayersControl.Overlay>*/}
+           {/*<LayersControl.Overlay checked={true} name={'Индекс'}>*/}
+           {/*   <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>*/}
+           {/*</LayersControl.Overlay>*/}
            <LayersControl.Overlay checked={true} name={'Исходник'}>
-              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/src`} bounds={bounds}/>
+              <ImageOverlay url={`${API_URL}${mapData.research.indexes.ndvi_png}`} bounds={bounds}/>
            </LayersControl.Overlay>
            <LayersControl.Overlay checked={true} name={'Индекс'}>
-              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>
+              <ImageOverlay url={`${API_URL} / geo /${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>
            </LayersControl.Overlay>
         </>
       )
