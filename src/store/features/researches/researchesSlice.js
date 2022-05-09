@@ -1,6 +1,14 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, createEntityAdapter} from "@reduxjs/toolkit";
 import {GeoService} from "../../../services/GeoService";
-import {fetchFields} from "../fields/fieldsSlice";
+
+const researchesAdapter = createEntityAdapter({
+   sortComparer: (a, b) => b.date.localeCompare(a.date)
+})
+
+const initialState = researchesAdapter.getInitialState({
+   status: 'idle',
+   error: null
+})
 
 export const fetchResearches = createAsyncThunk('fields/fetchResearches', async ({username, fieldId}) => {
    return await GeoService.fetchFieldResearches(username, fieldId)
@@ -8,11 +16,7 @@ export const fetchResearches = createAsyncThunk('fields/fetchResearches', async 
 
 const researchesSlice = createSlice({
    name: 'researches',
-   initialState: {
-      items: [],
-      error: null,
-      status: 'idle'
-   },
+   initialState,
    reducers: {},
    extraReducers: builder => {
       builder
@@ -20,9 +24,8 @@ const researchesSlice = createSlice({
            state.status = 'loading'
         })
         .addCase(fetchResearches.fulfilled, (state, action) => {
-           console.log(action.payload)
-           state.items = state.items.concat(action.payload)
-           state.status = 'complete'
+           researchesAdapter.upsertMany(state, action.payload)
+           state.status = 'idle'
         })
         .addCase(fetchResearches.rejected, (state, action) => {
            state.status = 'failed'
@@ -35,8 +38,15 @@ const researchesSlice = createSlice({
 
 export default researchesSlice.reducer
 
+export const {
+   selectAll: selectAllResearches,
+   selectById: selectResearchById,
+   selectIds: selectResearchesIds
+   // Pass in a selector that returns the posts slice of state
+} = researchesAdapter.getSelectors(state => state.researches)
 
-export const selectFieldResearches = (state, fieldId) => {
-   let res = state.researches.items.filter(research => research.field_id === fieldId)
-   return res
+
+export const selectResearchesByFieldId = (state, fieldId) => {
+   const researches = state.researches.entities
+   return Object.values(researches).filter(research => research.field_id === fieldId)
 }

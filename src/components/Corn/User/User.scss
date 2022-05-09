@@ -3,10 +3,91 @@
 
   position: absolute;
   bottom: 0;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
 
   &__username {
     color: white;
     font-size: 14px;
+
     margin-left: 10px;
+
+
+    &--visible {
+      opacity: 1;
+      transition: left .1s linear;
+
+      animation-duration: .3s;
+      animation-name: collapse-out;
+    }
+
+
+    &--collapsed {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transition: left .1s linear;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+
+      animation-duration: .1s;
+      animation-name: collapse-in;
+    }
+  }
+
+  &__fake-button {
+    margin-left: 8px;
+
+    svg {
+      fill: #fff;
+    }
+  }
+}
+
+@keyframes collapse-in {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    position: absolute;
+    left: 0;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+    opacity: 0;
+
+    visibility: hidden;
+  }
+}
+
+@keyframes collapse-out {
+  0% {
+    position: absolute;
+    opacity: 0;
+  }
+
+  25% {
+    opacity: .25;
+  }
+
+  50% {
+
+    opacity: .50;
+  }
+
+  65% {
+    position: relative;
+  }
+
+  75% {
+    opacity: .75;
+  }
+
+  100% {
+    opacity: 1;
+
   }
 }

@@ -1,59 +1,34 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import './FieldItem.scss'
+import {AimOutlined} from "@ant-design/icons";
+import * as turf from '@turf/turf'
 
-import {ResearchItem} from "./ResearchItem/ResearchItem";
+import {useDispatch} from "react-redux";
+import {setMapCenter, setZoom} from "../../../../../store/features/mapState/mapStateSlice";
 
-import {Collapse, List, message} from "antd";
-
-import {useDispatch, useSelector} from "react-redux";
-import {fetchResearches, selectFieldResearches} from "../../../../../store/features/researches/researchesSlice";
-
-const {Panel} = Collapse
 
 const FieldItem = ({field}) => {
    const dispatch = useDispatch()
-   const user = JSON.parse(localStorage.getItem('user'))
+   const _onZoomClick = (e) => {
+      let center = turf.center(field)
+      console.log('center', center)
+      dispatch(setMapCenter({mapCenter: center.geometry.coordinates.reverse()}))
+      dispatch(setZoom({zoom: 15}))
+   }
 
-   const researches = useSelector(state => selectFieldResearches(state, field.id))
-   const researchesStatus = useSelector(state => state.researches.status)
-
-
-   useEffect(() => {
-      console.log('fieldItem init', field.id, researches, researchesStatus)
-   }, [researches])
-
-   useEffect(() => {
-      if (researchesStatus === 'idle') {
-         dispatch(fetchResearches({username: user.username, fieldId: field.id}))
-      }
-      if (researchesStatus === 'failed') {
-         message.error('This is an error message')
-      }
-
-   }, [])
-   const header = (
+   return (
      <div className={'field-item'}>
         <div className={'field-item__icon'}>
            <img src="http://via.placeholder.com/20x20" alt=""/>
         </div>
         <h3 className={'field-item__name'}>{field.properties.name}</h3>
-        <span className={'field-item__area'}>{field.properties.area || 'null'}</span>
+        <span className={'field-item__area'}>{field.properties.area + ' га' || 'null'}</span>
+        <button className={'field-item__zoom-to-field'} onClick={_onZoomClick}>
+           <AimOutlined/>
+        </button>
      </div>
    )
-
-   return (
-
-     <Collapse bordered={false} className={'field-item__collapse'}>
-        <Panel key={field.id.toString()} header={header} className={'field-item__collapse-panel'}>
-           <div>
-              <List dataSource={researches} className={'research-list'} renderItem={(item) =>
-                <ResearchItem research={item}/>}/>
-           </div>
-        </Panel>
-     </Collapse>
-
-
-   );
+     ;
 };
 
 export {FieldItem};

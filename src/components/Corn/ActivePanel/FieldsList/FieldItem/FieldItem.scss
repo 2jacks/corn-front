@@ -14,21 +14,25 @@
   align-items: center !important;
   background-color: #fff;
   transition: background-color .2s linear;
+  padding: 10px !important;
 
   &:hover {
     background-color: $blue-2;
   }
 }
 
+
 .ant-collapse-content-box {
-  padding: 0 0 10px 0 !important;
+  padding: 0 !important;
 }
 
 .field-item {
-  padding: 10px 16px 10px 0;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  z-index: 10;
 
 
   &__icon {
@@ -56,19 +60,43 @@
     transition: color .2s linear;
   }
 
+  &__zoom-to-field {
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .2s background-color linear;
+
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 999;
+
+    margin-left: 10px;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+      background-color: $blue-6;
+    }
+  }
+
   &__area {
     font-size: 12px;
     color: #999999;
     font-weight: 300;
-    margin-left: 20px;
-
-    position: absolute;
-    right: 16px;
-
+    margin-left: auto;
+    text-align: end;
+    width: 40px;
   }
 
   &__collapse {
-    margin-bottom: 10px;
+    margin-top: 10px;
     border: none;
   }
 
@@ -79,7 +107,17 @@
   &__collapse-panel {
     padding: 0;
     background-color: #fff;
-    border: none !important;
+    margin-top: 10px;
+    //border: none !important;
+  }
+
+  &__extra {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+
+    border-top: 1px solid #cdcdcd;
+    box-shadow: 0 1px 8px 0 rgba(34, 60, 80, 0.2);
   }
 }
 

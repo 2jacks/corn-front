@@ -1,50 +1,46 @@
 import React, {useContext, useEffect} from 'react'
-import {ImageOverlay, LayersControl, TileLayer} from 'react-leaflet'
+import {ImageOverlay, LayersControl, TileLayer, FeatureGroup} from 'react-leaflet'
 
-import {DrawPanel} from '../DrawPanel/DrawPanel'
+import {DrawPanel} from '../DrawPanel/DrawPanel.jsx'
 import L from 'leaflet'
 
-import {MapData} from "../../../../contexts/MapData";
 
 import {API_URL} from "../../../../constants/BACKEND";
+import {useSelector} from "react-redux";
+import {selectResearchById} from "../../../../store/features/researches/researchesSlice";
 
-const Layers = ({mapCtx}) => {
-   const user = JSON.parse(localStorage.getItem('user'))
-   const mapData = useContext(MapData)
+const Layers = () => {
+   const user = useSelector(state => state.user)
+   const mapState = useSelector(state => state.mapState)
+   const research = useSelector(state => selectResearchById(state, mapState.research))
    useEffect(() => {
       console.log('map_user', user)
    }, [user])
-   useEffect(() => {
-      console.log('map', mapData)
-   }, [mapData])
 
-   let bounds = L.latLngBounds(
-     [54.091709135, 56.230794873],
-     [54.072576908, 56.272860853]
-   )
 
    let researchLayers
-   if (mapData && Object.keys(mapData.research).length !== 0) {
+   if (research) {
+      let bounds = L.latLngBounds(
+        [research.bounds.corner1.lat, research.bounds.corner1.lng],
+        [research.bounds.corner2.lat, research.bounds.corner2.lng]
+      )
       researchLayers = (
         <>
-           {/*<LayersControl.Overlay checked={true} name={'Исходник'}>*/}
-           {/*   <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/src`} bounds={bounds}/>*/}
-           {/*</LayersControl.Overlay>*/}
-           {/*<LayersControl.Overlay checked={true} name={'Индекс'}>*/}
-           {/*   <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>*/}
-           {/*</LayersControl.Overlay>*/}
            <LayersControl.Overlay checked={true} name={'Исходник'}>
-              <ImageOverlay url={`${API_URL}${mapData.research.indexes.ndvi_png}`} bounds={bounds}/>
+              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/rgb`} bounds={bounds}/>
            </LayersControl.Overlay>
-           <LayersControl.Overlay checked={true} name={'Индекс'}>
-              <ImageOverlay url={`${API_URL} / geo /${user.username}/fields/${mapData.research.field_id}/researches/${mapData.research.id}/files/index`} bounds={bounds}/>
+           <LayersControl.Overlay checked={true} name={'NDVI'}>
+              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndvi`} bounds={bounds}/>
+           </LayersControl.Overlay>
+           <LayersControl.Overlay checked={true} name={'NDWI'}>
+              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndwi`} bounds={bounds}/>
            </LayersControl.Overlay>
         </>
       )
    } else researchLayers = null
 
    return (
-     <LayersControl position="bottomright">
+     <LayersControl position="bottomright" collapsed={false}>
         <LayersControl.BaseLayer name={'Open Street Map'}>
            <TileLayer
              attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -60,7 +56,10 @@ const Layers = ({mapCtx}) => {
         </LayersControl.BaseLayer>
 
         <LayersControl.Overlay checked={true} name={'Области интереса'}>
-           <DrawPanel mapData={mapCtx}/>
+           <FeatureGroup>
+              <DrawPanel/>
+           </FeatureGroup>
+
         </LayersControl.Overlay>
 
         {researchLayers}

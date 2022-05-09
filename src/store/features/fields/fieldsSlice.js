@@ -1,5 +1,14 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, createEntityAdapter} from "@reduxjs/toolkit";
 import {GeoService} from "../../../services/GeoService";
+
+const fieldsAdapter = createEntityAdapter({
+   sortComparer: (a, b) => b.id > a.id
+})
+
+const initialState = fieldsAdapter.getInitialState({
+   status: 'idle',
+   error: null
+})
 
 export const fetchFields = createAsyncThunk('fields/fetchFields', async (username) => {
    return await GeoService.fetchFields(username)
@@ -7,25 +16,8 @@ export const fetchFields = createAsyncThunk('fields/fetchFields', async (usernam
 
 export const fieldsSlice = createSlice({
    name: 'fields',
-   initialState: {
-      items: [],
-      status: 'idle',
-      error: null
-   },
-   reducers: {
-      fetch: (state, action) => {
-
-      },
-      add: (state, action) => {
-
-      },
-      remove: (state, action) => {
-
-      },
-      patch: (state, action) => {
-
-      },
-   },
+   initialState,
+   reducers: {},
    extraReducers: builder => {
       builder
         .addCase(fetchFields.pending, (state, action) => {
@@ -34,7 +26,7 @@ export const fieldsSlice = createSlice({
         .addCase(fetchFields.fulfilled, (state, action) => {
            const fields = action.payload.features
            state.status = 'complete'
-           state.items = state.items.concat(fields)
+           fieldsAdapter.upsertMany(state, fields)
 
         })
         .addCase(fetchFields.rejected, (state, action) => {
@@ -45,13 +37,11 @@ export const fieldsSlice = createSlice({
    }
 })
 
-export const {fetch, add, remove, patch} = fieldsSlice.actions
 export default fieldsSlice.reducer
 
-export const selectAllFields = state => state.fields.items
-export const selectFieldById = (state, fieldId) => state.fields.items.find(field => field.id === fieldId)
-
-// export const selectFieldResearches = (state, fieldId) => {
-//    const field = state.fields.items.find(field => field.id === fieldId)
-//    return field.researches
-// }
+export const {
+   selectAll: selectAllFields,
+   selectById: selectFieldById,
+   selectIds: selectFieldsIds
+   // Pass in a selector that returns the posts slice of state
+} = fieldsAdapter.getSelectors(state => state.fields)

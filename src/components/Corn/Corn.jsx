@@ -11,7 +11,6 @@ import {useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {userFetched} from "../../store/features/user/userSlice";
 import {User} from "./User/User";
-import {MapData} from "../../contexts/MapData";
 
 const {Sider, Content} = Layout
 
@@ -24,7 +23,7 @@ const Corn = () => {
 
 
    const [isMenuCollapsed, setIsMenuCollapsed] = useState(false)
-   const [currentPanel, setCurrentPanel] = useState('fields')
+   const [currentPanel, setCurrentPanel] = useState('researches')
 
    const onToggleMenu = () => {
       setIsMenuCollapsed(!isMenuCollapsed)
@@ -76,28 +75,28 @@ const Corn = () => {
 
    return (
      <>
-        <MapData.Provider value={mapData}>
-           <Row>
-              <Col flex={'0 0 1'}>
-                 <Layout style={{maxWidth: '500px'}}>
-                    <Sider trigger={null} collapsible collapsed={isMenuCollapsed}>
-                       <CornMenu onSelect={onSelectPanel}/>
-                       <User username={user.username || 'Гость'} isMenuCollapsed={isMenuCollapsed}/>
-                    </Sider>
-                    <ActivePanel
-                      isMenuCollapsed={isMenuCollapsed}
-                      onToggleMenu={onToggleMenu}
-                      currentPanel={currentPanel}
-                    />
-                 </Layout>
-              </Col>
-              <Col flex={'auto'}>
-                 <Layout style={{width: '100%', height: '100vh'}}>
-                    <Map/>
-                 </Layout>
-              </Col>
-           </Row>
-        </MapData.Provider>
+
+        <Row>
+           <Col flex={'0 0 1'}>
+              <Layout style={{maxWidth: '500px'}}>
+                 <Sider trigger={null} collapsible collapsed={isMenuCollapsed}>
+                    <CornMenu onSelect={onSelectPanel}/>
+                    <User username={user.username || 'Гость'} isMenuCollapsed={isMenuCollapsed}/>
+                 </Sider>
+                 <ActivePanel
+                   isMenuCollapsed={isMenuCollapsed}
+                   onToggleMenu={onToggleMenu}
+                   currentPanel={currentPanel}
+                 />
+              </Layout>
+           </Col>
+           <Col flex={'auto'}>
+              <Layout style={{width: '100%', height: '100vh'}}>
+                 <Map/>
+              </Layout>
+           </Col>
+        </Row>
+
 
      </>)
 }

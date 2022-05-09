@@ -24,6 +24,17 @@ class GeoService {
         .then((res) => res.json())
    }
 
+   static async deleteAOI({username, fieldId, researchId, aoiId}) {
+      return await fetch(API_URL + `/geo/${username}/fields/${fieldId}/researches/${researchId}/aoi`, {
+         method: 'DELETE',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({aoiId})
+      })
+        .then((res) => res.json())
+   }
+
    static async fetchFields(username) {
       return await fetch(API_URL + `/geo/${username}/fields`, {
          method: 'GET',

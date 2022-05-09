@@ -1,4 +1,5 @@
 import React from 'react'
+import "./CornMenu.scss"
 import {
    AuditOutlined,
    BuildOutlined,
@@ -7,17 +8,15 @@ import {
 import {Menu, Avatar} from 'antd'
 
 const CornMenu = ({onSelect}) => {
+
    return (
-     <Menu theme="dark" mode="inline" defaultSelectedKeys={['fields']}>
+     <Menu theme="dark" mode="inline" defaultSelectedKeys={['researches']}>
         {/*<Menu.Item key="seasons" icon={<CalendarOutlined/>} onClick={onSelect}>*/}
         {/*   Сезоны*/}
         {/*</Menu.Item>*/}
-        <Menu.Item key="fields" icon={<BuildOutlined/>} onClick={onSelect}>
-           Поля
+        <Menu.Item key="researches" icon={<BuildOutlined/>} onClick={onSelect}>
+           Исследования
         </Menu.Item>
-        {/*<Menu.Item key="stats" icon={<AuditOutlined/>} onClick={onSelect}>*/}
-        {/*   Статистика*/}
-        {/*</Menu.Item>*/}
      </Menu>
    )
 }
