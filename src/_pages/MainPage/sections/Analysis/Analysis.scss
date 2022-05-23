@@ -1,0 +1,20 @@
+.analysis {
+  display: flex;
+  justify-content: space-between;
+
+  &__tool-window {
+    background-color: #fff;
+    padding: 10px;
+
+    header {
+      text-align: center;
+      text-transform: uppercase;
+
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.tool-form {
+  padding: 20px;
+}

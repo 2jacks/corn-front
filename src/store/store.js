@@ -7,6 +7,7 @@ import researchesReducer from "./features/researches/researchesSlice";
 import aoisReducer from './features/aois/aoisSlice'
 
 import mapStateReducer from "./features/mapState/mapStateSlice";
+import analysisReducer from "./features/analysis/analysisSlice";
 
 
 export default configureStore({
@@ -15,6 +16,7 @@ export default configureStore({
       fields: fieldsReducer,
       researches: researchesReducer,
       mapState: mapStateReducer,
-      aois: aoisReducer
+      aois: aoisReducer,
+      analysis: analysisReducer,
    }
 })

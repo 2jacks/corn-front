@@ -1,0 +1,33 @@
+@import "./src/styles/colors.scss";
+
+
+.corn-menu__collapse-trigger {
+  font-size: 20px;
+  color: #757575;
+
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+  width: 30px;
+  height: 30px;
+
+
+  padding: 8px;
+  border-radius: 15px;
+  background-color: $blue-4;
+  box-shadow: 0 0 6px 0 $blue-7;
+  transition: transfrom .2s linear;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+  }
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
