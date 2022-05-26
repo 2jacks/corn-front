@@ -5,9 +5,11 @@ import {SidePanel} from "../../../../components/SidePanel/SidePanel";
 import {Toolbar} from './Toolbar/Toolbar'
 import {SideBySide} from "./SideBySide/SideBySide";
 import {useSelector} from "react-redux";
+import {PeriodDelta} from "./PeriodDelta/PeriodDelta";
 
 const analysisTools = {
-   'sideBySide': <SideBySide/>
+   'sideBySide': <SideBySide/>,
+   'periodDelta': <PeriodDelta/>
 }
 
 const Analysis = () => {

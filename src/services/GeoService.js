@@ -53,6 +53,21 @@ class GeoService {
          },
       }).then((res) => res.json())
    }
+
+   static async getDiffResearches({res_1, res_2, field}) {
+      return await fetch(API_URL + `/geo/analysis/index_diff/`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+            firstRes: res_1,
+            secondRes: res_2,
+            mask: field.geometry
+         })
+      }).then((res) => res)
+
+   }
 }
 
 export {GeoService}

@@ -17,6 +17,12 @@ const SideBySideActivator = ({data}) => {
    const mapCtx = lCtx.map
    const map = useMap()
    useEffect(() => {
+      // map.eachLayer((lyr) => {
+      //    map.remove(lyr)
+      // })
+      // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      //    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      // }).addTo(map);
       if (data) {
          console.log('data', data)
          let res_1 = store.getState().researches.entities[data.res_1]

@@ -32,8 +32,11 @@ const Layers = () => {
            <LayersControl.Overlay checked={true} name={'NDVI'}>
               <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndvi`} bounds={bounds}/>
            </LayersControl.Overlay>
-           <LayersControl.Overlay checked={true} name={'NDWI'}>
-              <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndwi`} bounds={bounds}/>
+           {/*<LayersControl.Overlay checked={true} name={'NDWI'}>*/}
+           {/*   <ImageOverlay url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndwi`} bounds={bounds}/>*/}
+           {/*</LayersControl.Overlay>*/}
+           <LayersControl.Overlay checked={true} name={'WMS'}>
+              <ImageOverlay url={`http://localhost:8160/geoserver/corn/wms?`} bounds={bounds}/>
            </LayersControl.Overlay>
         </>
       )
@@ -41,7 +44,7 @@ const Layers = () => {
 
    return (
      <LayersControl position="bottomright" collapsed={false}>
-        <LayersControl.BaseLayer name={'Open Street ResearchesMap'}>
+        <LayersControl.BaseLayer name={'Open Street Map'}>
            <TileLayer
              attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
