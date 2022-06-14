@@ -5,6 +5,7 @@ import userReducer from "./features/user/userSlice";
 import fieldsReducer from "./features/fields/fieldsSlice";
 import researchesReducer from "./features/researches/researchesSlice";
 import aoisReducer from './features/aois/aoisSlice'
+import fitoscanReducer from './features/fitoscan/fitoscanSlice'
 
 import mapStateReducer from "./features/mapState/mapStateSlice";
 import analysisReducer from "./features/analysis/analysisSlice";
@@ -18,5 +19,6 @@ export default configureStore({
       mapState: mapStateReducer,
       aois: aoisReducer,
       analysis: analysisReducer,
+      fitoscan: fitoscanReducer
    }
 })

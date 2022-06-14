@@ -53,7 +53,7 @@ const PeriodDeltaForm = ({onSubmit, onFieldChange, selectedField}) => {
 
         <Form.Item label="">
            <Button type="primary" htmlType="submit">
-              Включить шторку
+              Показать изменения
            </Button>
         </Form.Item>
 

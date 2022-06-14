@@ -1,15 +1,9 @@
-.period-delta {
+.map__control-group {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
-
-  &__map {
-    width: 100%;
-    height: 100vh;
-  }
+  flex-direction: column;
 }
 
-.legend--delta {
+.legend {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -36,7 +30,7 @@
   }
 
   .palette {
-    width: 200px;
+    width: 130px;
 
     margin-bottom: 10px;
 

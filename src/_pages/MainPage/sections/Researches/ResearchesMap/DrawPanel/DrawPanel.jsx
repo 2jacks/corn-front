@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import './DrawPanel.css'
 
-import {Popup, LayerGroup, Polygon, FeatureGroup, useMap, GeoJSON} from 'react-leaflet'
+import {Popup, LayerGroup, Polygon, FeatureGroup, useMap, GeoJSON, Pane} from 'react-leaflet'
 
 import L from 'leaflet'
 
@@ -11,7 +11,7 @@ import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import * as turf from '@turf/turf'
 
 import {useSelector, useDispatch} from "react-redux";
-import {addAoi, selectAoisByResearchId} from '../../../../../../store/features/aois/aoisSlice';
+import {addAoi, deleteAoi, selectAoisByResearchId} from '../../../../../../store/features/aois/aoisSlice';
 import {Table} from "antd";
 
 
@@ -25,21 +25,28 @@ function DrawPanel() {
 
    const aois = useSelector(state => selectAoisByResearchId(state, mapState.research))
 
-   const _onCreate = useCallback((e) => {
+   const _onCreate = useCallback(async (e) => {
       const layer = e.layer
-      const area = String(turf.area(layer.toGeoJSON()) / 10000)
 
-      dispatch(addAoi({
+      const area = String(turf.area(layer.toGeoJSON()) / 10000)
+      await dispatch(addAoi({
          username: user.username,
          fieldId: mapState.field,
          researchId: mapState.research,
          geom: layer.toGeoJSON(),
          area: area
       }))
+      layer.pm.remove()
    }, [mapState])
 
    const _onDelete = useCallback((e) => {
-
+      let aoiId = e.layer.feature.id
+      dispatch(deleteAoi({
+         username: user.username,
+         fieldId: mapState.field,
+         researchId: mapState.research,
+         aoiId: aoiId
+      }))
    }, [mapState])
 
 
@@ -48,13 +55,14 @@ function DrawPanel() {
       map.pm.addControls({
          position: 'bottomleft',
 
+         rotateMode: false,
          drawMarker: false,
          drawCircle: false,
          drawCircleMarker: false,
          drawPolyline: false,
          drawRectangle: true,
          drawPolygon: true,
-         editMode: true,
+         editMode: false,
          dragMode: false,
          cutPolygon: false,
       })
@@ -64,6 +72,8 @@ function DrawPanel() {
    useEffect(() => {
       map.off('pm:create')
       map.on('pm:create', _onCreate)
+      map.off('pm:remove')
+      map.on('pm:remove', _onDelete)
    }, [mapState])
 
 
@@ -99,8 +109,12 @@ function DrawPanel() {
          popupData = Object.fromEntries(entries)
          // debugger
          return (
-           <GeoJSON key={aoi.id} data={aoi.geometry}>
-              <Popup>
+           <GeoJSON key={aoi.id} data={aoi} eventHandlers={{
+              click: (e) => {
+                 console.log(e)
+              }
+           }}>
+              <Popup pane={'toppane'}>
                  <Table dataSource={[popupData]} columns={columns} pagination={false} size={'small'} bordered={true} rowKey={aoi.id}/>
               </Popup>
            </GeoJSON>)
@@ -109,7 +123,8 @@ function DrawPanel() {
       return (
         <FeatureGroup ref={fgRef}>
            {renderedAois}
-        </FeatureGroup>)
+        </FeatureGroup>
+      )
 
    } else {
       return null

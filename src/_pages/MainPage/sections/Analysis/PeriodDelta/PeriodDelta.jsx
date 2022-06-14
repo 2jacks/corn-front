@@ -22,29 +22,11 @@ const PeriodDelta = () => {
          if (res.ok) {
             res.blob().then(blob => {
                setRasterUrl(URL.createObjectURL(blob))
-               console.log()
-               // return URL.createObjectURL(blob)
             })
          }
       })
 
    }
-
-   useEffect(() => {
-      console.log(rasterUrl)
-   }, [rasterUrl])
-
-   // useEffect(() => {
-   //    if (selectedField) {
-   //       console.log(selectedField)
-   //       let bbox = turf.envelope(selectedField).bbox
-   //       console.log(bbox)
-   //       let bounds = L.latLngBounds([bbox[0], bbox[1]], [bbox[2], bbox[3]])
-   //       console.log(bbox[0], bbox[1], bbox[2], bbox[3])
-   //       console.log(bounds)
-   //    }
-   //
-   // }, [selectedField])
 
    const _onFieldChange = (id) => {
       setSelectedFieldId(id)
@@ -93,6 +75,19 @@ const PeriodDelta = () => {
 
 
               <MapController field={selectedField}/>
+
+              <div className="legend--delta">
+                 <h4>Легенда</h4>
+                 <div className="palette">
+                    <h5>Изменение вегетации</h5>
+                    <img src="./img/diff_palette.jpg" alt=""/>
+                    <div className="palette-desc">
+                       <span>Отрицательное</span>
+                       <span>Положительное</span>
+                    </div>
+                 </div>
+              </div>
+
            </MapContainer>
         </div>
         <div style={{flex: '0 0 1'}}>

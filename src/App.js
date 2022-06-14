@@ -21,7 +21,6 @@ const App = () => {
       AuthService.verify(access_token)
         .then((res) => {
            dispatch(userFetched({...localUser, access_token}))
-           console.log('token is fresh')
         })
         .catch((err) => {
            console.log(err)

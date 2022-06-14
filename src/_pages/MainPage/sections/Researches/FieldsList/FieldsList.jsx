@@ -51,7 +51,7 @@ const FieldsList = () => {
                           className={'field-item__collapse-panel'}
                           onItemClick={_onFieldItemClick}
                    >
-                      <div className={'field-item__extra'}>There will be extra</div>
+                      {/*<div className={'field-item__extra'}>There will be extra</div>*/}
                       <ResearchesList fieldId={field.id}/>
                    </Panel>
                  )

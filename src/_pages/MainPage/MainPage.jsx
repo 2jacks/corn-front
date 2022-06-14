@@ -19,13 +19,13 @@ const sections = {
       menuIcon: <ExperimentOutlined/>,
       body: <Researches/>
    },
-   'fields': {
-      header: 'Поля',
-      menuIcon: <RadiusSettingOutlined/>,
-      body: <Fields/>
-   },
+   // 'fields': {
+   //    header: 'Поля',
+   //    menuIcon: <RadiusSettingOutlined/>,
+   //    body: <Fields/>
+   // },
    'analysis': {
-      header: 'Анализ',
+      header: 'Инструменты',
       menuIcon: <RadarChartOutlined/>,
       body: <Analysis/>
    }

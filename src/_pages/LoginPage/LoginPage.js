@@ -49,11 +49,11 @@ const LoginPage = () => {
         <Form
           name="basic"
           labelCol={{
-             span: 8,
+             span: 12,
           }}
-          wrapperCol={{
-             span: 16,
-          }}
+          // wrapperCol={{
+          //    span: 16,
+          // }}
           initialValues={{
              remember: false,
              username: 'anton',
@@ -64,7 +64,7 @@ const LoginPage = () => {
           autoComplete="off"
         >
            <Form.Item
-             label="Username"
+             label="Имя пользователя"
              name="username"
              rules={[
                 {
@@ -77,7 +77,7 @@ const LoginPage = () => {
            </Form.Item>
 
            <Form.Item
-             label="Password"
+             label="Пароль"
              name="password"
              rules={[
                 {
@@ -89,20 +89,20 @@ const LoginPage = () => {
               <Input.Password/>
            </Form.Item>
 
-           <Form.Item
-             name="remember"
-             valuePropName="checked"
-             wrapperCol={{
-                offset: 8,
-                span: 16,
-             }}
-           >
-              <Checkbox>Remember me</Checkbox>
-           </Form.Item>
+           {/*<Form.Item*/}
+           {/*  name="remember"*/}
+           {/*  valuePropName="checked"*/}
+           {/*  wrapperCol={{*/}
+           {/*     offset: 8,*/}
+           {/*     span: 16,*/}
+           {/*  }}*/}
+           {/*>*/}
+           {/*   <Checkbox>Remember me</Checkbox>*/}
+           {/*</Form.Item>*/}
 
            <Form.Item
              wrapperCol={{
-                offset: 8,
+                offset: 12,
                 span: 16,
              }}
            >

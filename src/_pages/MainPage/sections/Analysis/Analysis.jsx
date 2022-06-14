@@ -19,7 +19,7 @@ const Analysis = () => {
      <div className="analysis">
 
         <div style={{flex: '0 0 1'}}>
-           <SidePanel header="Анализ" body={<Toolbar/>}/>
+           <SidePanel header="Инструменты" body={<Toolbar/>}/>
         </div>
         <div style={{flex: '0 1 1', width: '100%'}}>
            {analysisTools[activeAnalysisTool]}

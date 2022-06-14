@@ -8,7 +8,13 @@ const MapController = () => {
    const center = useSelector(state => state.mapState.mapCenter)
    const zoom = useSelector(state => state.mapState.zoom)
 
-   
+   //GEOMAN SETTINGS
+   useEffect(() => {
+      map.pm.setGlobalOptions({
+         panes: {vertexPane: 'drawPanel', layerPane: 'drawPanel', markerPane: 'drawPanel'}
+      });
+   }, [])
+
    useEffect(() => {
       map.flyTo(center, zoom)
    }, [center, zoom])

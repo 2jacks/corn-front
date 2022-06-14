@@ -13,6 +13,9 @@ const initialState = fieldsAdapter.getInitialState({
 export const fetchFields = createAsyncThunk('fields/fetchFields', async (username) => {
    return await GeoService.fetchFields(username)
 })
+export const deleteField = createAsyncThunk('fields/deleteField', async ({username, fieldId}) => {
+   return await GeoService.deleteField({username, fieldId})
+})
 
 export const fieldsSlice = createSlice({
    name: 'fields',
@@ -33,6 +36,7 @@ export const fieldsSlice = createSlice({
            state.status = 'failed'
            state.error = action.error.message
         })
+        .addCase(deleteField.fulfilled, fieldsAdapter.removeOne)
 
    }
 })
