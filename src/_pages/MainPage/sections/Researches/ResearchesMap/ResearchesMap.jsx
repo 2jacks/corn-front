@@ -28,6 +28,14 @@ const ResearchesMap = () => {
                     <span>Высокая</span>
                  </div>
               </div>
+              <div className="palette">
+                 <h5>Содержание влаги</h5>
+                 <img src="./img/diff_palette.jpg" alt=""/>
+                 <div className="palette-desc">
+                    <span>Низкое</span>
+                    <span>Высокое</span>
+                 </div>
+              </div>
               <div className="row">
                  <div className={'row-object'}>
                     <img src="./img/field_example.jpg" alt=""/>

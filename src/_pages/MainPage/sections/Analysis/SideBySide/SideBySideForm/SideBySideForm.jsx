@@ -15,12 +15,22 @@ const SideBySideForm = ({onSubmit}) => {
    const fields = useSelector(selectAllFields)
    const [selectedField, setSelectedField] = useState(null)
    const researches = useSelector(state => selectResearchesByFieldId(state, selectedField))
-
+   let sortedResearches = researches.sort((a, b)=> {
+      if (new Date(a.date) > new Date(b.date)) {
+         return 1
+      }
+      if (new Date(a.date) < new Date(b.date)){
+         return -1
+      }
+      if (new Date(a.date) === new Date(b.date)) {
+         return 0
+      }
+   })
 
    const fieldSelectOptions = fields.map(field =>
      <Select.Option value={field.id}>{field.properties.name}</Select.Option>
    )
-   const researchesSelectOptions = researches.map(research =>
+   const researchesSelectOptions = sortedResearches.map(research =>
      <Select.Option value={research.id}>{research.date}</Select.Option>
    )
    return (

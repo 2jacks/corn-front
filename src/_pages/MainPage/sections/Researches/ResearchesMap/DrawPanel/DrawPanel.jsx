@@ -81,17 +81,17 @@ function DrawPanel() {
       let renderedAois = aois.map(aoi => {
          const columns = [
             {
-               title: 'Мин.',
+               title: 'Мин. NDVI',
                dataIndex: 'min_index',
                key: 'min_index',
             },
             {
-               title: 'Макс.',
+               title: 'Макс. NDVI',
                dataIndex: 'max_index',
                key: 'max_index',
             },
             {
-               title: 'Среднее',
+               title: 'Средний NDVI',
                dataIndex: 'mean_index',
                key: 'mean_index',
             },

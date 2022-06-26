@@ -107,7 +107,7 @@ const LoginPage = () => {
              }}
            >
               <Button type="primary" htmlType="submit">
-                 Submit
+                 Войти
               </Button>
            </Form.Item>
         </Form>

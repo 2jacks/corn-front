@@ -2,7 +2,17 @@ import {createSlice, createAsyncThunk, createEntityAdapter} from "@reduxjs/toolk
 import {GeoService} from "../../../services/GeoService";
 
 const researchesAdapter = createEntityAdapter({
-   sortComparer: (a, b) => b.date.localeCompare(a.date)
+   sortComparer: (a, b)=> {
+      if (new Date(a.date) > new Date(b.date)) {
+         return 1
+      }
+      if (new Date(a.date) < new Date(b.date)){
+         return -1
+      }
+      if (new Date(a.date) === new Date(b.date)) {
+         return 0
+      }
+   }
 })
 
 const initialState = researchesAdapter.getInitialState({

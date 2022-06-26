@@ -23,26 +23,21 @@ const ResearchesList = ({fieldId}) => {
       }
    }, [dispatch])
 
-   // if (researchesStatus === 'loading') {
-   //    return (
-   //      <div className={'researches-list__spin'}>
-   //         <Spin/>
-   //      </div>
-   //    )
-   // } else {
-   //    return (
-   //      <div>
-   //         <div>
-   //            <List dataSource={researches} className={'researches-list'} renderItem={(item) =>
-   //              <ResearchItem research={item}/>}/>
-   //         </div>
-   //      </div>
-   //    );
-   // }
+   let sortedResearches = researches.sort((a, b)=> {
+      if (new Date(a.date) > new Date(b.date)) {
+         return 1
+      }
+      if (new Date(a.date) < new Date(b.date)){
+         return -1
+      }
+      if (new Date(a.date) === new Date(b.date)) {
+         return 0
+      }
+   })
    return (
      <div>
         <div>
-           <List dataSource={researches} className={'researches-list'} renderItem={(item) =>
+           <List dataSource={sortedResearches} className={'researches-list'} renderItem={(item) =>
              <ResearchItem research={item}/>}/>
         </div>
      </div>

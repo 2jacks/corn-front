@@ -81,16 +81,20 @@ const Layers = () => {
       let invertedField = turf.flip(field)
       layers = (
         <>
-           <LayersControl.Overlay checked={true} name={'Натуральные цвета'}>
+           <LayersControl.Overlay checked={false} name={'RGB снимок'}>
               <ImageOverlay zIndex={1001} url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/rgb`} bounds={bounds}/>
            </LayersControl.Overlay>
 
-           <LayersControl.Overlay checked={true} name={'NDVI'}>
-              <ImageOverlay zIndex={1001} url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndvi`} bounds={bounds}/>
+           {research.indexes.ndwi_png ? <LayersControl.Overlay checked={false} name={'Содержание влаги'}>
+              <ImageOverlay zIndex={1001} url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndwi`} bounds={bounds}/>
+           </LayersControl.Overlay> : null}
+
+           <LayersControl.Overlay checked={true} name={'Вегетация'}>
+              <ImageOverlay zIndex={1003} url={`${API_URL}/geo/${user.username}/fields/${mapState.field}/researches/${mapState.research}/files/ndvi`} bounds={bounds}/>
            </LayersControl.Overlay>
 
 
-           <LayersControl.Overlay checked={true} name={'Границы'}>
+           <LayersControl.Overlay checked={true} name={'Границы поля'}>
               <Pane name={'field'} style={{zIndex: 1002}}>
                  <Polyline
                    positions={invertedField.geometry.coordinates}
@@ -112,16 +116,16 @@ const Layers = () => {
                  </FeatureGroup>
               </Pane>
            </LayersControl.Overlay>
-
-           <LayersControl.Overlay checked={true} name={'ФИТОСКАН'}>
+           {fitoscan.length > 0 ?
+             <LayersControl.Overlay checked={true} name={'ФИТОСКАН'}>
               <Pane name={'fitoscan'} style={{zIndex: 1003}}>
                  <FeatureGroup>
                     {fitoscanPoints}
                  </FeatureGroup>
               </Pane>
-
-
            </LayersControl.Overlay>
+             : null}
+
         </>
       )
    } else layers = null
@@ -129,6 +133,7 @@ const Layers = () => {
      <>
         <Modal
           title="Результаты ФитоСкана"
+          cancelText={'Закрыть'}
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
